@@ -20,8 +20,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 module TopLevel (input master_clk, // Clock Control
 					  input [2:0] ALUControl, // ALU Control 
-					  input RegWrite // Control on Register Write 
-					  
+					  input RegWrite, // Control on Register Write 
+					  input MemWrite // Control on Data Memory Write
 					  );
 					  
 	wire [31:0] PCout_Addr_Plus1; 
@@ -31,6 +31,7 @@ module TopLevel (input master_clk, // Clock Control
 	wire [31:0] SignExtend_SrcB;
 	wire [31:0] ALUResult_DMAddress;
 	wire [31:0] DMReadData_RFWriteData3;
+	wire [31:0] RFRD2_DMWD;
 	
 	ProgramCounter U00 ( .PCin(Plus1_PCin), .clk(master_clk), .PCout(PCout_Addr_Plus1) );
 	
@@ -38,12 +39,12 @@ module TopLevel (input master_clk, // Clock Control
 	
 	InstructionMemory U02 ( .A(PCout_Addr_Plus1), .RD(Whole_RD) );
 	
-	RegisterFile U03 ( .clk(master_clk), .RegWrite(RegWrite), .A1(Whole_RD[25:21]), .A2(A2), .A3(Whole_RD[20:16]), .WD3(DMReadData_RFWriteData3), .RD1(RD1_SrcA), .RD2(RD2) );
+	RegisterFile U03 ( .clk(master_clk), .RegWrite(RegWrite), .A1(Whole_RD[25:21]), .A2(Whole_RD[20:16]), .A3(Whole_RD[20:16]), .WD3(DMReadData_RFWriteData3), .RD1(RD1_SrcA), .RD2(RFRD2_DMWD) );
 	
 	SignExtend U04 ( .a(Whole_RD[15:0]), .signImm(SignExtend_SrcB) );
 	
 	ArithmeticLogicUnit U05 ( .SrcA(RD1_SrcA), .SrcB(SignExtend_SrcB), .ALUControl(ALUControl), .ALUResult(ALUResult_DMAddress), .ZeroFlag(ZeroFlag) );
 	
-	DataMemory U06 ( .clk(master_clk), .WE(WE), .A(ALUResult_DMAddress), .WD(WD), .RD(DMReadData_RFWriteData3) );
+	DataMemory U06 ( .clk(master_clk), .WE(MemWrite), .A(ALUResult_DMAddress), .WD(RFRD2_DMWD), .RD(DMReadData_RFWriteData3) );
 
 endmodule
