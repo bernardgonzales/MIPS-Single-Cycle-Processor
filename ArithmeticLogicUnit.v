@@ -22,13 +22,18 @@ module ArithmeticLogicUnit( input [31:0] SrcA,
 									 input [31:0] SrcB,
 									 input [2:0] ALUControl,
 									 output ZeroFlag,
-									 output [31:0] ALUResult );
+									 output  [31:0] ALUResult );
 	reg [31:0] result;
 	always @(*) begin
-		if (ALUControl == 2) // ALUControl = 010
-			result = SrcA + SrcB; 
+	
+		case (ALUControl)
+		0: result <= SrcA & SrcB; // 000 AND
+		1: result <= SrcA | SrcB; // 001 OR
+		2: result <= SrcA + SrcB; // 010 Addition 
+		3: result <= SrcA - SrcB; // 011 Subtraction 
+		endcase 
 	end
 	
-	assign ALUResult = result;
+	assign ALUResult = result; 
 
 endmodule
