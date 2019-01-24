@@ -18,10 +18,10 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module PCPlus4( input [31:0] PCin,
+module PCPlus1( input [31:0] PCin,
 					 output [31:0] PCout );
 					 
-	assign PCout = PCin + 4;
+	assign PCout = PCin + 1;
 
 
 endmodule
