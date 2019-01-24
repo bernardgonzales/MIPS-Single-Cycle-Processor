@@ -47,7 +47,7 @@ module RegisterFile( input clk,
 	registers[13] = 32'h00000000;
 	registers[14] = 32'h00000000;
 	registers[15] = 32'h00000000;
-	registers[16] = 32'h00000000;
+	registers[16] = 32'h7;
 	registers[17] = 32'h00000000;
 	registers[18] = 32'h00000000;
 	registers[19] = 32'h00000000;
@@ -76,5 +76,9 @@ module RegisterFile( input clk,
 	
 	// Assign the base address to RD1. 
 	assign RD1 = registers[A1];
+	
+	// Assign value of register at A2 to RD2.
+	assign RD2 = registers[A2];
+	
 	
 endmodule
