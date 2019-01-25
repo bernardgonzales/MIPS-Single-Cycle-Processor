@@ -32,8 +32,8 @@ module RegisterFile( input clk,
 	// Initialize file to 0s. 
 	initial begin 
 	registers[0] = 32'h00000000;
-	registers[1] = 32'h00000000;
-	registers[2] = 32'h00000000;
+	registers[1] = 32'h4;
+	registers[2] = 32'h5;
 	registers[3] = 32'h00000000;
 	registers[4] = 32'h00000000;
 	registers[5] = 32'h00000000;
@@ -47,7 +47,7 @@ module RegisterFile( input clk,
 	registers[13] = 32'h00000000;
 	registers[14] = 32'h00000000;
 	registers[15] = 32'h00000000;
-	registers[16] = 32'h7;
+	registers[16] = 32'h00000000;
 	registers[17] = 32'h00000000;
 	registers[18] = 32'h00000000;
 	registers[19] = 32'h00000000;
