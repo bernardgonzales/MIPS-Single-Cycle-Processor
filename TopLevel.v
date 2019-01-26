@@ -52,7 +52,7 @@ module TopLevel (input master_clk // Connect all clocks together.
 	
 	// ALU Decoder wire
 	wire [2:0] Connect_ALUControl; 
-	wire [2:0] Connect_ALUOp;
+	wire [1:0] Connect_ALUOp;
 	
 	Main_Decoder U14 ( .Opcode(Instruction[31:26]), .MemtoReg(Connect_MemtoReg), .MemWrite(Connect_MemWrite), .Branch(Connect_Branch), .ALUSrc(Connect_ALUSrc), .RegDst(Connect_RegDst), .RegWrite(Connect_RegWrite), .ALUOp(Connect_ALUOp) );
 	

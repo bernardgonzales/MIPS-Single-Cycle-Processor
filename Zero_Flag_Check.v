@@ -19,9 +19,15 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 module Zero_Flag_Check( input a, 
+								input b,
 								output result
 								);
-
-	assign result = a & 1; 
+	reg temp; 
+	
+	always @(*) begin
+		temp <= a & b;
+	end
+	
+	assign result = temp; 
 
 endmodule
