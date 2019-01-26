@@ -23,19 +23,19 @@ module ALU_Decoder( input [1:0] ALUOp,
 						  input [5:0] Funct,
 						  output [2:0] ALUControl
 						  );
-	reg [2:0] temp; 
+	reg [2:0] control; 
 	always @(*) begin
 		case (ALUOp)			   // I-TYPE
-			3'b000: temp <= 3'b010; // Add
-			3'b001: temp <= 3'b110; // Sub
+			2'b00: control <= 3'b010; // Add
+			2'b01: control <= 3'b110; // Sub
 			default: case (Funct)		  // R-TYPE
-				6'b100000: temp <= 3'b010; // Add 
-				6'b100010: temp <= 3'b110; // Sub
-				6'b100100: temp <= 3'b000; // And 
-				6'b100101: temp <= 3'b001; // Or
-				6'b101010: temp <= 3'b111; // Slt
+				6'b100000: control <= 3'b010; // Add 
+				6'b100010: control <= 3'b110; // Sub
+				6'b100100: control <= 3'b000; // And 
+				6'b100101: control <= 3'b001; // Or
+				6'b101010: control <= 3'b111; // Slt
 			endcase 
 		endcase
 	end
-	assign ALUControl = temp; 
+	assign ALUControl = control; 
 endmodule
