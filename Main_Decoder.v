@@ -25,11 +25,11 @@ module Main_Decoder( input [5:0] Opcode,
 							output ALUSrc, 
 							output RegDst, 
 							output RegWrite,
-							output [2:0] ALUOp
+							output [1:0] ALUOp
 							);
 							
-	reg [5:0] control_output; 
-	reg [2:0] alu_operation;
+	reg [7:0] control_output; 
+	//reg [2:0] alu_operation;
 	always @(*) begin 
 		case (Opcode) 
 		6'b100011: control_output <= 8'b10100100;  // Load Word
@@ -41,6 +41,13 @@ module Main_Decoder( input [5:0] Opcode,
 	end 
 	
 	// Assign Opcode to the respective multiplexers and write enables. 
-	assign { RegWrite, RegDst, ALUSrc, Branch, MemWrite, MemtoReg, ALUOp } = control_output;
-
+	assign { RegWrite, RegDst, ALUSrc, Branch, MemWrite, MemtoReg, ALUOp[1:0] } = control_output [7:0] ;
+	/*
+	assign RegWrite = control_output[7];
+	assign RegDst = control_output[6]; 
+	assign ALUSrc = control_output[5];
+	assign Branch = control_output[4];
+	assign MemWrite = control_output[3];
+	assign MemtoReg = control_output[2];
+	assign ALUOp[2:0] = control_output[1:0];*/
 endmodule
