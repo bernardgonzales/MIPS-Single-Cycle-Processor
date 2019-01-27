@@ -54,15 +54,26 @@ module TopLevel (input master_clk // Connect all clocks together.
 	wire [2:0] Connect_ALUControl; 
 	wire [1:0] Connect_ALUOp;
 	
-	Main_Decoder U14 ( .Opcode(Instruction[31:26]), .MemtoReg(Connect_MemtoReg), .MemWrite(Connect_MemWrite), .Branch(Connect_Branch), .ALUSrc(Connect_ALUSrc), .RegDst(Connect_RegDst), .RegWrite(Connect_RegWrite), .ALUOp(Connect_ALUOp) );
+	// Jump 
+	wire [27:0] Shifted_Jump;
+	wire [31:0] Multiplexer_4_PC;
+	wire [31:0] Jump_PC;
+	wire [31:0] Multiplexer_5_PC;
+	wire Connect_Jump;
+	
+	Shift_Left_2 U16 ( .oldPC(Instruction[25:0]), .newPC(Shifted_Jump) );
+	
+	Multiplexer_5 U15 ( .Multiplexer_Instruction(Multiplexer_4_PC), .Jump_Instruction( {PC_Plus1_Result[31:28], Shifted_Jump} ), .Jump_Control(Connect_Jump), .New_PC(Multiplexer_5_PC) );
+	
+	Main_Decoder U14 ( .Opcode(Instruction[31:26]), .MemtoReg(Connect_MemtoReg), .MemWrite(Connect_MemWrite), .Branch(Connect_Branch), .ALUSrc(Connect_ALUSrc), .RegDst(Connect_RegDst), .RegWrite(Connect_RegWrite), .ALUOp(Connect_ALUOp), .Jump(Connect_Jump) );
 	
 	ALU_Decoder U13 ( .ALUOp(Connect_ALUOp), .Funct(Instruction[5:0]), .ALUControl(Connect_ALUControl) );
 	
-	ProgramCounter U00 ( .PCin(Multi_PC), .clk(master_clk), .PCout(PCout_Addr_Plus1) );
+	ProgramCounter U00 ( .PCin(Multiplexer_5_PC), .clk(master_clk), .PCout(PCout_Addr_Plus1) );
 	
 	PCPlus1 U01 ( .PCin(PCout_Addr_Plus1), .PCout(PC_Plus1_Result) );
 	
-	Multiplexer_4 U11 ( .a(PC_Plus1_Result), .b(PC_Branch_Result), .PC_Next(Multi_PC), .AND_Result(AND_Result) );
+	Multiplexer_4 U11 ( .a(PC_Plus1_Result), .b(PC_Branch_Result), .PC_Next(Multiplexer_4_PC), .AND_Result(AND_Result) );
 	
 	InstructionMemory U02 ( .A(PCout_Addr_Plus1), .RD(Instruction) );
 	
