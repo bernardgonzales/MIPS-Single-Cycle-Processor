@@ -21,12 +21,22 @@
 module Memory_WriteBack_Pipeline( input clk,
 											 input RegWriteM,
 											 input MemtoRegM,
-											 output reg Register_File_WE,
-											 output reg Multiplexer_3_Select
+											 input [31:0] ALUResultM,
+											 input [31:0] DMReadDataM,
+											 input [4:0] WriteRegM,
+											 output reg RegWriteW,
+											 output reg MemtoRegW,
+											 output reg [31:0] ALUResultW,
+											 output reg [31:0] DMReadDataW,
+											 output reg [4:0] WriteRegW
 											 );
 	always @(posedge clk) begin
-			Register_File_WE <= RegWriteM;
-			Multiplexer_3_Select <= MemtoRegM;
+			RegWriteW <= RegWriteM;
+			MemtoRegW <= MemtoRegM;
+			ALUResultW <= ALUResultM;
+			DMReadDataW <= DMReadDataM;
+			WriteRegW <= WriteRegM;
+			
 	end
 
 endmodule
