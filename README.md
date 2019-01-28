@@ -14,3 +14,7 @@ The following are the milestones I took to complete this project:
  IMPORTANT NOTES:
  - When incrementing the program counter, I needed to increment by one rather than four. Although MIPS processors do increment every 32 bits, I needed to increment by one instead due to reading machine code from a .dat file. 
  - During the pipeline process, I removed the fifth multiplexer and the shift left module (used by the jump instruction) for the program to increment. Will look into this fix. 
+
+CURRENTLY IN PROGRESS: 
+- Re-implement the jump instruction. 
+- Implement hazard control unit for dependencies.
