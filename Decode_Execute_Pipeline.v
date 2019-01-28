@@ -26,13 +26,26 @@ module Decode_Execute_Pipeline( input clk,
 										  input [2:0] ALUControlD,
 										  input ALUSrcD,
 										  input RegDstD,
+										  input [31:0] RD1_D,
+										  input [31:0] RD2_D,
+										  input [4:0] Rt_D,
+										  input [4:0] Rd_D,
+										  input [31:0] SignImm_D,
+										  input [31:0] PCPlusOne_D,	  
+										  
 										  output reg RegWriteE,
 										  output reg MemtoRegE,
 										  output reg MemWriteE,
 										  output reg BranchE,
 										  output reg [2:0] ALUControlE,
 										  output reg ALUSrcE,
-										  output reg RegDstE
+										  output reg RegDstE,
+										  output reg [31:0] SrcA_E,
+										  output reg [31:0] RD2_E,
+										  output reg [4:0] Rt_E,
+										  output reg [4:0] Rd_E,
+										  output reg [31:0] SignImm_E,
+										  output reg [31:0] PCPlusOne_E
 										  );
 										
 
@@ -44,6 +57,14 @@ module Decode_Execute_Pipeline( input clk,
 		ALUControlE <= ALUControlD;
 		ALUSrcE <= ALUSrcD;
 		RegDstE <= RegDstD;
+		SrcA_E <= RD1_D;
+		RD2_E <= RD2_D;
+		Rt_E <= Rt_D;
+		Rd_E <= Rd_D;
+		SignImm_E <= SignImm_D;
+		PCPlusOne_E <= PCPlusOne_D;
+		
+		
 	end 
 
 
