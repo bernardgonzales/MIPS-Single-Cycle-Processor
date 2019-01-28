@@ -22,7 +22,7 @@ module Fetch_Decode_Pipeline( input clk,
 										input [31:0] IM_RD,
 										input [31:0] PC_Plus_One_F,
 										output reg [31:0] Instruction,
-										output reg PC_Plus_One_D
+										output reg [31:0] PC_Plus_One_D
 										);
 										
 	always @(posedge clk) begin
