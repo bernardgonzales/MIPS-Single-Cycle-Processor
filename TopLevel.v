@@ -23,17 +23,7 @@ module TopLevel ( input master_clk // Connect all clocks together.
 					  
 	wire [31:0] PCout_Addr_Plus1; 
 	wire [31:0] Instruction_Decode; 
-	wire [31:0] RD1_SrcA;
-	wire [31:0] SignExtend;
-	wire [31:0] ALUResult;
-	wire [31:0] DMReadData;
-	wire [31:0] RFRD2;
-	wire [4:0] Multi_WriteReg; 
 	wire [31:0] Multi_SrcB;
-	wire [31:0] Multi_WriteData; 
-	wire [31:0] PC_Branch_Result;
-	wire [31:0] Multi_PC;
-	wire Connect_Zero_Flag; 
 	
 	// Main Decoder wires
 	wire Connect_MemtoReg;
